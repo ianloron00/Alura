@@ -1,7 +1,24 @@
-const robotronImg = document.getElementById('robotron');
+const controleContainer = document.querySelectorAll(".controle");
 
-robotronImg.addEventListener("click", dizOi)
+controleContainer.forEach((controle) => {
+    const operador = controle.querySelectorAll(".controle-ajuste");
+    const elementoValor = controle.querySelector(".controle-contador");
 
-function dizOi() {
-    console.log('oi');
+    operador.forEach((elementoOperador) => {
+        elementoOperador.addEventListener("click", () => {
+            manipulaValor( elementoOperador.textContent, elementoValor );
+        })
+    })
+});
+
+function manipulaValor (operacao, elementoValor) {
+    const valor = parseInt(elementoValor.value);
+
+    if (operacao === "+") {
+        elementoValor.value = valor + 1;
+    }
+    else if (operacao === "-" && valor > 0) {
+        elementoValor.value = valor - 1;
+    }
+    return;
 }
