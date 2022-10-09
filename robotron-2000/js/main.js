@@ -1,14 +1,11 @@
 const controleContainer = document.querySelectorAll(".controle");
+const ajuste = document.querySelectorAll("[controle-ajuste]");
 
-controleContainer.forEach((controle) => {
-    const operador = controle.querySelectorAll(".controle-ajuste");
-    const elementoValor = controle.querySelector(".controle-contador");
-
-    operador.forEach((elementoOperador) => {
-        elementoOperador.addEventListener("click", () => {
-            manipulaValor( elementoOperador.textContent, elementoValor );
-        })
-    })
+ajuste.forEach( (elAjuste) => {
+    elAjuste.addEventListener( "click", () => {
+        const elValor = elAjuste.parentNode.querySelector("[valor-contador]");
+        manipulaValor( elAjuste.textContent, elValor );    
+    });
 });
 
 function manipulaValor (operacao, elementoValor) {
