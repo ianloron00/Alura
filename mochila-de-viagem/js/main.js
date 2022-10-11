@@ -13,14 +13,39 @@ itens.forEach((elemento, id) => {
     addItem(item);
 });
 
-function addItem(item) {
-    const elItem = `
-    <li class="item" data-item="${item.id}">
+function getElItem(item) {
+    const elItem = document.createElement("li")
+    elItem.setAttribute("class", "item")
+    elItem.setAttribute("data-item", item.id)
+    elItem.innerHTML = `
         <strong>${item.quantidade}</strong> 
         ${item.nome}
-        <input type="button" data-deleta="${item.id}" value="X"></input>
-    </li>`;
-    lista.innerHTML += elItem;
+    `
+    
+    const deletaBtn = document.createElement("input")
+    deletaBtn.setAttribute("type", "button")
+    deletaBtn.setAttribute("value", "X")
+    deletaBtn.setAttribute("data-deleta", item.id)
+    deletaBtn.addEventListener("mouseover", function() {
+        deletarItem(this.parentNode, item.id)
+    })
+    
+    elItem.appendChild(deletaBtn)
+    return elItem
+}
+
+function deletarItem(elItem, id) {
+    console.log("oi!")
+}
+
+function addItem(item) {
+    lista.appendChild( getElItem(item) )
+}
+
+function atualizaItem(item) {
+    const oldElItem = 
+        lista.querySelector("[data-item='"+item.id+"']")
+    lista.replaceChild( getElItem(item), oldElItem )
 }
 
 /* adicionando ao local storage */
@@ -44,15 +69,6 @@ function saveItem(nome, quantidade) {
         addItem(item)
     }
     localStorage.setItem( "itens", JSON.stringify(itens) );
-}
-
-function atualizaItem(item) {
-    lista.querySelector("[data-item='"+item.id+"']").innerHTML = `
-        <strong>${item.quantidade}</strong> 
-        ${item.nome}
-        <input type="button" data-deleta="${item.id}" value="X"></input>
-    `
-    console.log(lista)
 }
 
 function limparInput() {
