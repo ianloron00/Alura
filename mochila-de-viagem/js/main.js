@@ -18,6 +18,7 @@ function addItem(item) {
     <li class="item" data-item="${item.id}">
         <strong>${item.quantidade}</strong> 
         ${item.nome}
+        <input type="button" data-deleta="${item.id}" value="X"></input>
     </li>`;
     lista.innerHTML += elItem;
 }
@@ -36,7 +37,7 @@ function saveItem(nome, quantidade) {
     if (idItem > -1) {
         itens[idItem] = item
         item.id = idItem
-        atualizaItem(idItem, nome, quantidade)
+        atualizaItem(item)
     } else {
         itens.push(item);
         item.id = itens.length - 1
@@ -45,9 +46,11 @@ function saveItem(nome, quantidade) {
     localStorage.setItem( "itens", JSON.stringify(itens) );
 }
 
-function atualizaItem(id, nome, quantidade) {
-    lista.querySelector("[data-item='"+id+"']").innerHTML = `
-        <strong>${quantidade}</strong> ${nome}
+function atualizaItem(item) {
+    lista.querySelector("[data-item='"+item.id+"']").innerHTML = `
+        <strong>${item.quantidade}</strong> 
+        ${item.nome}
+        <input type="button" data-deleta="${item.id}" value="X"></input>
     `
     console.log(lista)
 }
