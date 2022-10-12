@@ -26,16 +26,23 @@ function getElItem(item) {
     deletaBtn.setAttribute("type", "button")
     deletaBtn.setAttribute("value", "X")
     deletaBtn.setAttribute("data-deleta", item.id)
-    deletaBtn.addEventListener("mouseover", function() {
-        deletarItem(this.parentNode, item.id)
+    deletaBtn.addEventListener("click", function() {
+        deletarItem(this.parentNode)
     })
     
     elItem.appendChild(deletaBtn)
     return elItem
 }
 
-function deletarItem(elItem, id) {
-    console.log("oi!")
+function deletarItem(elItem) {
+    const id = parseInt(
+        elItem.getAttribute("data-item")
+    )
+    itens.splice(itens.findIndex( 
+        (item) => id === item.id
+        ), 1)
+    localStorage.setItem("itens", JSON.stringify(itens))
+    elItem.remove()
 }
 
 function addItem(item) {
@@ -64,8 +71,8 @@ function saveItem(nome, quantidade) {
         item.id = idItem
         atualizaItem(item)
     } else {
+        item.id = itens.length
         itens.push(item);
-        item.id = itens.length - 1
         addItem(item)
     }
     localStorage.setItem( "itens", JSON.stringify(itens) );
